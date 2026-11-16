@@ -1,0 +1,85 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { t, useUI, ymLabel, type Lang } from '../i18n/ui';
+
+interface Props {
+  awards: CollectionEntry<'awards'>[];
+  lang: Lang;
+}
+const { awards, lang } = Astro.props;
+const u = useUI(lang);
+---
+
+<ol class="awards">
+  {
+    awards.map((a) => (
+      <li>
+        <span class="date mono">{ymLabel(a.data.date, lang)}</span>
+        <div>
+          <p class="title">
+            <span class="star" aria-hidden="true">★</span>
+            {t(a.data.title, lang)}
+          </p>
+          <p class="org">{t(a.data.org, lang)}</p>
+          {a.data.work && <p class="work">{t(a.data.work, lang)}</p>}
+          {a.data.note && <span class="tag dim">{t(a.data.note, lang)}</span>}
+          {a.data.url && (
+            <a class="tag" href={a.data.url} rel="noopener">
+              {u('pub.details')}
+            </a>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .awards {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 6.4em 1fr;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+  li:last-child {
+    border-bottom: 0;
+  }
+  p {
+    margin: 0;
+  }
+  .date {
+    padding-top: 2px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .title {
+    font-weight: 650;
+  }
+  .star {
+    margin-right: 6px;
+    color: var(--teal);
+  }
+  .org {
+    font-size: 0.92rem;
+  }
+  .work {
+    margin-top: 2px;
+    font-size: 0.86rem;
+    color: var(--muted);
+  }
+  .tag {
+    margin-top: 6px;
+  }
+  @media (max-width: 560px) {
+    li {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+</style>

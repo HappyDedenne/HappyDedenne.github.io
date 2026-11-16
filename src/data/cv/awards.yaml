@@ -1,4 +1,4 @@
-# 受賞歴。date: "YYYY.MM" / work: 受賞対象（任意） / note: 補足（任意）
+# 受賞歴（研究業績ページに表示）。date: "YYYY.MM" / work: 受賞対象（任意） / url: 公式発表などのリンク（任意）
 # 新しい順に書く。{ en: ..., ja: ... } で英語・日本語を書き分けます。
 
 - date: "2026.04"
@@ -6,51 +6,48 @@
   org: { en: Showa Ikeda Memorial Foundation, ja: 公益財団法人 昭和池田記念財団 }
   work:
     en: Essay on edge-AI-based disaster support toward zero evacuation delays
-    ja: 題目「災害大国日本において「逃げ遅れゼロ」を実現するために ～エッジ AI を活用した「人に寄り添う災害支援」～」
-  note: { en: "3 of 77 entries (3.9%)", ja: 受賞者数/応募者数 3/77（3.9%） }
+    ja: 「災害大国日本において「逃げ遅れゼロ」を実現するために ～エッジ AI を活用した「人に寄り添う災害支援」～」
+  url: https://www.showaikedakinen-zaidan.or.jp/archives/winner/836
 
 - date: "2025.05"
-  title: { en: Outstanding Student Poster Award, ja: LSIとシステムのワークショップ 2025 優秀ポスター賞（学生部門） }
+  title: { en: Outstanding Student Poster Award, ja: 優秀ポスター賞（学生部門） }
   org:
-    en: "IEICE LSI and Systems Workshop 2025 (Technical Committee on Integrated Circuits and Devices)"
-    ja: 一般社団法人 電子情報通信学会 集積回路研究専門委員会
+    en: IEICE LSI and Systems Workshop 2025
+    ja: LSIとシステムのワークショップ 2025（電子情報通信学会 集積回路研究専門委員会）
   work:
-    en: Poster on a bit-scalable LUT-based in-memory accelerator for quantized neural networks
-    ja: 題目「乗算を LUT で代替するビットスケーラブルな量子化ニューラルネットワーク向けインメモリアクセラレータ」
-  note: { en: "3 of 81 entries (3.7%)", ja: 受賞者数/投稿者数 3/81（3.7%） }
+    en: Bit-scalable LUT-based in-memory accelerator for quantized neural networks
+    ja: 「乗算を LUT で代替するビットスケーラブルな量子化ニューラルネットワーク向けインメモリアクセラレータ」
+  url: https://www.ieice.org/~icd/award/2025.html
 
 - date: "2024.05"
-  title: { en: Outstanding Student Poster Award, ja: LSIとシステムのワークショップ 2024 優秀ポスター賞（学生部門） }
+  title: { en: Outstanding Student Poster Award, ja: 優秀ポスター賞（学生部門） }
   org:
-    en: "IEICE LSI and Systems Workshop 2024 (Technical Committee on Integrated Circuits and Devices)"
-    ja: 一般社団法人 電子情報通信学会 集積回路研究専門委員会
+    en: IEICE LSI and Systems Workshop 2024
+    ja: LSIとシステムのワークショップ 2024（電子情報通信学会 集積回路研究専門委員会）
   work:
-    en: Poster on a multiplication-free in-memory accelerator using dynamic comparators and lookup tables
-    ja: 題目「ダイナミック比較器と Lookup Table を用いた乗算不要な機械学習向けインメモリアクセラレータ」
+    en: Multiplication-free in-memory accelerator using dynamic comparators and lookup tables
+    ja: 「ダイナミック比較器と Lookup Table を用いた乗算不要な機械学習向けインメモリアクセラレータ」
+  url: https://vlsi.cce.i.kyoto-u.ac.jp/archives/880
 
 - date: "2024.04"
   title: { en: IPSJ Computer Science Research Award for Young Scientists, ja: 情報処理学会 コンピュータサイエンス領域奨励賞 }
-  org: { en: Information Processing Society of Japan (IPSJ), ja: 一般社団法人 情報処理学会 コンピュータサイエンス領域 }
+  org: { en: Information Processing Society of Japan (IPSJ), ja: 情報処理学会 }
   work:
-    en: For the paper presented at the DA Symposium 2023 (leakage-based 12T-SRAM in-memory accelerator)
-    ja: DAシンポジウム 2023 で発表した論文「リーク電流で演算する量子化ニューラルネットワーク用低電力 12T-SRAM インメモリアクセラレータ」に対して
+    en: Low-power leakage-based 12T-SRAM in-memory accelerator (DA Symposium 2023)
+    ja: 「リーク電流で演算する量子化ニューラルネットワーク用低電力 12T-SRAM インメモリアクセラレータ」（DAシンポジウム 2023）
+  url: https://www.ipsj.or.jp/award/cs-awardee-2024.html
 
 - date: "2023.08"
-  title: { en: Outstanding Presentation Award, ja: 情報処理学会 システムLSI設計技術研究会 優秀発表賞 }
-  org:
-    en: IPSJ SIG on System and LSI Design Methodology (SLDM)
-    ja: 一般社団法人 情報処理学会 システムとLSIの設計技術研究会
+  title: { en: "Outstanding Presentation Award, IPSJ SIG-SLDM", ja: 情報処理学会 システムとLSIの設計技術研究会 優秀発表賞 }
+  org: { en: IPSJ SIG on System and LSI Design Methodology (SLDM), ja: 情報処理学会 システムとLSIの設計技術研究会 }
   work:
-    en: Presentation on a low-power leakage-based 12T-SRAM in-memory accelerator
-    ja: 題目「リーク電流で演算する量子化ニューラルネットワーク用低電力 12T-SRAM インメモリアクセラレータ」
-  note: { en: Among 21 presenters, ja: 発表者21名中 }
+    en: Low-power leakage-based 12T-SRAM in-memory accelerator (DA Symposium 2023)
+    ja: 「リーク電流で演算する量子化ニューラルネットワーク用低電力 12T-SRAM インメモリアクセラレータ」（DAシンポジウム 2023）
+  url: https://www.sig-sldm.org/presentation-award.html
 
 - date: "2022.09"
   title: { en: Outstanding Poster Presentation Award, ja: DAシンポジウム 2022 優秀ポスター発表賞 }
-  org:
-    en: IPSJ DA Symposium 2022 Organizing Committee
-    ja: 一般社団法人 情報処理学会 DAシンポジウム実行委員会
+  org: { en: IPSJ DA Symposium 2022, ja: 情報処理学会 DAシンポジウム 2022 }
   work:
-    en: Poster on a dual-input 8T-SRAM in-memory accelerator for binary neural networks
-    ja: 題目「8T-SRAM を用いた同時2入力対応な2値化ニューラルネットワーク用インメモリアクセラレータ」
-  note: { en: Among 12 presenters, ja: 発表者12名中 }
+    en: Dual-input 8T-SRAM in-memory accelerator for binary neural networks
+    ja: 「8T-SRAM を用いた同時2入力対応な2値化ニューラルネットワーク用インメモリアクセラレータ」

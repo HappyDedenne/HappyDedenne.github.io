@@ -1,7 +1,7 @@
 # 研究業績リスト
 # type: journal（論文誌） / international（国際会議） / domestic（国内発表）
 # date: "YYYY" または "YYYY.MM"（引用符で囲む）
-# 任意項目: details, doi, url, pdf, presentation (oral / poster / oral+poster), note, award, lang (en / ja), selected
+# 任意項目: details, doi, url（IEEE Xplore など）, arxiv, pdf, presentation (oral / poster / oral+poster), note, award（複数なら [ ... ]）, lang (en / ja), selected
 # selected: true にしたものはトップページの「主な研究業績」に出ます。
 # 英語ページと日本語ページで表記を変えたい項目は { en: ..., ja: ... } と書きます（例: venue, note, award, authors）。
 # タイトルは原文のまま（英語論文は英語、国内発表は日本語）表示します。
@@ -15,13 +15,14 @@
   details: vol. 5, pp. 328–340
   date: "2024"
   doi: 10.1109/OJCAS.2024.3482469
+  url: https://ieeexplore.ieee.org/document/10721281
   selected: true
 
 # ---- International conferences (peer-reviewed) -------------------------
 - type: international
   authors: [H. Tagata, T. Sato, H. Awano]
   title: "PALETTE: A Reconfigurable LUT-CIM Macro Featuring On-Chip Parallel LUT Update and Pipelined Accumulation"
-  venue: ACM/IEEE International Conference on Computer-Aided Design (ICCAD)
+  venue: IEEE/ACM International Conference on Computer-Aided Design (ICCAD)
   date: "2026.11"
   note: { en: "Acceptance rate 25.3% (370/1464)", ja: "採択率 25.3%（370/1464）" }
   selected: true
@@ -33,6 +34,8 @@
   details: San Francisco, CA, USA, pp. 1–7
   date: "2025.06"
   doi: 10.1109/DAC63849.2025.11132097
+  url: https://ieeexplore.ieee.org/document/11132097
+  arxiv: https://arxiv.org/abs/2506.16800
   note: { en: "Acceptance rate 22.5% (420/1862)", ja: "採択率 22.5%（420/1862）" }
   selected: true
 
@@ -63,7 +66,9 @@
   details: pp. 228–234
   date: "2023.09"
   presentation: oral+poster
-  award: { en: IPSJ Computer Science Research Award for Young Scientists, ja: 情報処理学会 コンピュータサイエンス領域奨励賞 }
+  award:
+    - { en: IPSJ Computer Science Research Award for Young Scientists, ja: 情報処理学会 コンピュータサイエンス領域奨励賞 }
+    - { en: IPSJ SIG-SLDM Outstanding Presentation Award, ja: 情報処理学会 SLDM研究会 優秀発表賞 }
 
 - type: domestic
   lang: ja

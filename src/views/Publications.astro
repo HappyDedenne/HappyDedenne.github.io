@@ -2,7 +2,8 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Window from '../components/Window.astro';
-import PubSections from '../components/PubSections.astro';
+import PubItem from '../components/PubItem.astro';
+import AwardList from '../components/AwardList.astro';
 import { byYmDesc } from '../lib/utils';
 import { SITE } from '../config';
 import { t, useUI, type Lang } from '../i18n/ui';
@@ -13,14 +14,45 @@ interface Props {
 const { lang } = Astro.props;
 const u = useUI(lang);
 const all = (await getCollection('publications')).sort(byYmDesc);
-const count = (type: string) => all.filter((p) => p.data.type === type).length;
-const summary = `J ${count('journal')} · C ${count('international')} · D ${count('domestic')}`;
-const description =
-  lang === 'ja' ? `${t(SITE.name, lang)}の研究業績一覧。` : `Publications of ${t(SITE.name, lang)}.`;
+const awards = (await getCollection('awards')).sort(byYmDesc);
+
+const groups = [
+  { type: 'journal', key: 'pub.journal', prefix: 'J' },
+  { type: 'international', key: 'pub.international', prefix: 'C' },
+  { type: 'domestic', key: 'pub.domestic', prefix: 'D' },
+] as const;
+const sections = groups
+  .map((g) => ({ ...g, items: all.filter((p) => p.data.type === g.type) }))
+  .filter((g) => g.items.length > 0);
+
+const name = t(SITE.name, lang);
+const description = lang === 'ja' ? `${name}の研究業績（発表論文・受賞歴）。` : `Publications and awards of ${name}.`;
 ---
 
 <Base lang={lang} title={u('pub.title')} description={description}>
-  <Window title={u('pub.title')} status={u('pub.items')(all.length)} statusRight={summary}>
-    <PubSections pubs={all} lang={lang} />
+  <h1 class="visually-hidden">{u('pub.title')}</h1>
+
+  {
+    sections.map((s) => (
+      <Window title={u(s.key)} status={u('pub.items')(s.items.length)}>
+        <ol class="pubs">
+          {s.items.map((p, i) => (
+            <PubItem pub={p} lang={lang} label={`${s.prefix}${s.items.length - i}`} />
+          ))}
+        </ol>
+      </Window>
+    ))
+  }
+
+  <Window title={u('pub.awards')} status={u('pub.items')(awards.length)}>
+    <AwardList awards={awards} lang={lang} />
   </Window>
 </Base>
+
+<style>
+  .pubs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

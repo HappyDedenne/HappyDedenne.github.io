@@ -56,8 +56,9 @@ const publications = defineCollection({
     url: z.string().optional(),
     pdf: z.string().optional(),
     presentation: z.enum(['oral', 'poster', 'oral+poster']).optional(),
+    arxiv: z.string().optional(),
     note: L.optional(),
-    award: L.optional(),
+    award: z.union([L, z.array(L)]).optional(),
     lang: z.enum(['en', 'ja']).default('en'),
     selected: z.boolean().default(false),
   }),
@@ -85,11 +86,14 @@ const education = defineCollection({
   loader: yamlList('src/data/cv/education.yaml'),
   schema: z.object({
     order: z.number(),
+    level: z.enum(['bachelor', 'master', 'doctor']),
     period: L,
     degree: L,
     school: L,
     lab: L.optional(),
+    labUrl: z.string().optional(),
     advisor: L.optional(),
+    thesis: L.optional(),
     research: L.optional(),
   }),
 });
@@ -118,6 +122,7 @@ const awards = defineCollection({
     org: L,
     work: L.optional(),
     note: L.optional(),
+    url: z.string().optional(),
   }),
 });
 
@@ -133,7 +138,7 @@ const skills = defineCollection({
 
 const activities = defineCollection({
   loader: yamlList('src/data/cv/activities.yaml'),
-  schema: z.object({ order: z.number(), period: z.string().optional(), title: L, org: L.optional() }),
+  schema: z.object({ order: z.number(), name: L }),
 });
 
 export const collections = {

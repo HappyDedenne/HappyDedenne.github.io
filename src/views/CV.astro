@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Window from '../components/Window.astro';
-import PubSections from '../components/PubSections.astro';
 import { SITE, LINKS } from '../config';
-import { byOrder, byYmDesc } from '../lib/utils';
-import { t, useUI, ymLabel, type Lang } from '../i18n/ui';
+import { byOrder } from '../lib/utils';
+import { localePath, t, useUI, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -19,8 +18,6 @@ const experience = (await getCollection('experience')).sort(byOrder);
 const internships = experience.filter((e) => e.data.category === 'internship');
 const employment = experience.filter((e) => e.data.category === 'employment');
 const training = experience.filter((e) => e.data.category === 'training');
-const pubs = (await getCollection('publications')).sort(byYmDesc);
-const awards = (await getCollection('awards')).sort(byYmDesc);
 const fellowships = (await getCollection('fellowships')).sort(byOrder);
 const skills = (await getCollection('skills')).sort(byOrder);
 const activities = (await getCollection('activities')).sort(byOrder);
@@ -30,7 +27,7 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
 ---
 
 <Base lang={lang} title={u('cv.title')} description={description}>
-  <Window title={u('cv.title')} status={name} statusRight={t(SITE.affiliation, lang)}>
+  <Window title={u('cv.title')}>
     <div class="cv-head">
       <div>
         <h1>{name} <span class="alt">{t(SITE.altName, lang)}</span></h1>
@@ -38,6 +35,7 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
       </div>
       <div class="btn-row">
         {SITE.cvPdf && <a class="btn primary" href={SITE.cvPdf}>{u('cv.pdf')}</a>}
+        <a class="btn" href={localePath('/publications/', lang)}>{u('nav.publications')}</a>
         {
           links.map((l) => (
             <a class="btn" href={l.href} rel="noopener">
@@ -47,8 +45,9 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
         }
       </div>
     </div>
+  </Window>
 
-    <h2 class="sec-head">{u('cv.education')}</h2>
+  <Window title={u('cv.education')}>
     <dl class="rows">
       {
         education.map((e) => (
@@ -61,13 +60,27 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
                 {e.data.lab && (
                   <>
                     <dt>{u('cv.lab')}</dt>
-                    <dd>{t(e.data.lab, lang)}</dd>
+                    <dd>
+                      {e.data.labUrl ? (
+                        <a href={e.data.labUrl} rel="noopener">
+                          {t(e.data.lab, lang)}
+                        </a>
+                      ) : (
+                        t(e.data.lab, lang)
+                      )}
+                    </dd>
                   </>
                 )}
                 {e.data.advisor && (
                   <>
                     <dt>{u('cv.advisor')}</dt>
                     <dd>{t(e.data.advisor, lang)}</dd>
+                  </>
+                )}
+                {e.data.thesis && (
+                  <>
+                    <dt>{u(`cv.thesis.${e.data.level}`)}</dt>
+                    <dd>{t(e.data.thesis, lang)}</dd>
                   </>
                 )}
                 {e.data.research && (
@@ -82,113 +95,56 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
         ))
       }
     </dl>
+  </Window>
 
-    <h2 class="sec-head">{u('cv.interests')}</h2>
-    <dl class="rows">
+  <Window title={u('cv.interests')}>
+    <ul class="interests">
       {
         research.map((r) => (
-          <>
-            <dt class="mono">{r.data.period}</dt>
-            <dd>
-              <strong>{t(r.data.title, lang)}</strong>
-              <div class="muted small">{t(r.data.summary, lang)}</div>
-            </dd>
-          </>
+          <li>
+            <span class="mono period">{r.data.period}</span>
+            <strong>{t(r.data.title, lang)}</strong>
+          </li>
         ))
       }
-    </dl>
+    </ul>
+  </Window>
 
-    <h2 class="sec-head">{u('cv.internships')} <span class="count">{internships.length}</span></h2>
-    <dl class="rows">
-      {
-        internships.map((e) => (
-          <>
-            <dt class="mono">{e.data.period}</dt>
-            <dd>
+  <div class="cols">
+    <Window title={u('cv.internships')} status={u('pub.items')(internships.length)}>
+      <ul class="entries">
+        {
+          internships.map((e) => (
+            <li>
+              <span class="mono period">{e.data.period}</span>
               <strong>{t(e.data.org, lang)}</strong>
-              {e.data.place && <span class="muted"> — {t(e.data.place, lang)}</span>}
-              <div>{t(e.data.title, lang)}</div>
-              {e.data.note && <div class="muted">{t(e.data.note, lang)}</div>}
-            </dd>
-          </>
-        ))
-      }
-    </dl>
+              <span>{t(e.data.title, lang)}</span>
+              {e.data.place && <span class="muted">{t(e.data.place, lang)}</span>}
+            </li>
+          ))
+        }
+      </ul>
+    </Window>
 
-    <h2 class="sec-head">{u('cv.employment')}</h2>
-    <dl class="rows">
-      {
-        employment.map((e) => (
-          <>
-            <dt class="mono">{e.data.period}</dt>
-            <dd>
-              <strong>{t(e.data.org, lang)}</strong>
-              <div>
-                {t(e.data.title, lang)}{' '}
+    <Window title={u('cv.employment')}>
+      <ul class="entries">
+        {
+          employment.map((e) => (
+            <li>
+              <span class="mono period">
+                {e.data.period}
                 {e.data.kind && <span class="tag dim">{u(`cv.kind.${e.data.kind}`)}</span>}
-              </div>
-              {e.data.note && <div class="muted">{t(e.data.note, lang)}</div>}
-            </dd>
-          </>
-        ))
-      }
-    </dl>
+              </span>
+              <strong>{t(e.data.org, lang)}</strong>
+              <span>{t(e.data.title, lang)}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </Window>
+  </div>
 
-    {
-      training.length > 0 && (
-        <>
-          <h2 class="sec-head">{u('cv.training')}</h2>
-          <dl class="rows">
-            {training.map((e) => (
-              <>
-                <dt class="mono">{e.data.period}</dt>
-                <dd>
-                  <strong>{t(e.data.org, lang)}</strong>
-                  <div>{t(e.data.title, lang)}</div>
-                </dd>
-              </>
-            ))}
-          </dl>
-        </>
-      )
-    }
-
-    <h2 class="sec-head">{u('cv.publications')} <span class="count">{pubs.length}</span></h2>
-    <PubSections pubs={pubs} lang={lang} level={3} />
-
-    <h2 class="sec-head">{u('cv.awards')} <span class="count">{awards.length}</span></h2>
-    <dl class="rows">
-      {
-        awards.map((a) => (
-          <>
-            <dt class="mono">{ymLabel(a.data.date, lang)}</dt>
-            <dd>
-              <strong>{t(a.data.title, lang)}</strong>
-              <div>{t(a.data.org, lang)}</div>
-              {a.data.work && <div class="muted small">{t(a.data.work, lang)}</div>}
-              {a.data.note && <span class="tag hl">{t(a.data.note, lang)}</span>}
-            </dd>
-          </>
-        ))
-      }
-    </dl>
-
-    <h2 class="sec-head">{u('cv.scholarships')}</h2>
-    <dl class="rows">
-      {
-        fellowships.map((f) => (
-          <>
-            <dt class="mono">{f.data.period}</dt>
-            <dd>
-              <strong>{t(f.data.title, lang)}</strong>
-              {f.data.org && <div>{t(f.data.org, lang)}</div>}
-            </dd>
-          </>
-        ))
-      }
-    </dl>
-
-    <h2 class="sec-head">{u('cv.skills')}</h2>
+  <Window title={u('cv.skills')}>
     <dl class="rows skills">
       {
         skills.map((s) => (
@@ -203,22 +159,43 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
         ))
       }
     </dl>
-
-    <h2 class="sec-head">{u('cv.activities')}</h2>
-    <dl class="rows">
-      {
-        activities.map((a) => (
-          <>
-            <dt class="mono">{a.data.period ?? ''}</dt>
-            <dd>
-              {a.data.org && <strong>{t(a.data.org, lang)}</strong>}
-              <div>{t(a.data.title, lang)}</div>
-            </dd>
-          </>
-        ))
-      }
-    </dl>
   </Window>
+
+  <div class="cols3">
+    <Window title={u('cv.training')}>
+      <ul class="entries">
+        {
+          training.map((e) => (
+            <li>
+              <span class="mono period">{e.data.period}</span>
+              <strong>{t(e.data.org, lang)}</strong>
+              <span>{t(e.data.title, lang)}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </Window>
+
+    <Window title={u('cv.scholarships')}>
+      <ul class="entries">
+        {
+          fellowships.map((f) => (
+            <li>
+              <span class="mono period">{f.data.period}</span>
+              {f.data.org && <strong>{t(f.data.org, lang)}</strong>}
+              <span>{t(f.data.title, lang)}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </Window>
+
+    <Window title={u('cv.activities')}>
+      <ul class="plain">
+        {activities.map((a) => <li>{t(a.data.name, lang)}</li>)}
+      </ul>
+    </Window>
+  </div>
 </Base>
 
 <style>
@@ -228,10 +205,9 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
     align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
-    margin-bottom: 30px;
   }
   .cv-head .btn-row {
-    max-width: 420px;
+    max-width: 460px;
     justify-content: flex-end;
   }
   h1 {
@@ -251,10 +227,12 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
     margin: 0;
     font-size: 0.8rem;
   }
+
+  /* 学歴・スキル: 左に期間 / 見出し、右に内容 */
   .rows {
     display: grid;
     grid-template-columns: 11.5em 1fr;
-    gap: 14px 20px;
+    gap: 16px 20px;
     margin: 0;
   }
   .rows > dt {
@@ -267,16 +245,10 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
     font-size: 0.94rem;
     line-height: 1.65;
   }
-  .rows > dd > .tag {
-    margin-top: 4px;
-  }
-  .small {
-    font-size: 0.86rem;
-  }
   .meta {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: 2px 10px;
+    gap: 2px 12px;
     margin: 6px 0 0;
     font-size: 0.86rem;
   }
@@ -285,6 +257,7 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
     font-size: 0.72rem;
     color: var(--muted);
     padding-top: 2px;
+    white-space: nowrap;
   }
   .meta dd {
     margin: 0;
@@ -300,6 +273,77 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
   .skills .tag {
     white-space: normal;
   }
+
+  /* 研究分野 */
+  .interests {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .interests li {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-size: 0.95rem;
+  }
+
+  /* 狭いボックス用: 期間を上に、内容を下に */
+  .entries {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .entries li {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  .entries li:first-child {
+    padding-top: 0;
+  }
+  .entries li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+  .period {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+  .interests .period {
+    flex: none;
+    width: 3.6em;
+    margin: 0;
+  }
+  .plain {
+    margin: 0;
+    padding-left: 1.2em;
+    font-size: 0.92rem;
+    line-height: 1.9;
+  }
+
+  .cols3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 36px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .cols3 {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+  }
   @media (max-width: 640px) {
     .rows {
       grid-template-columns: 1fr;
@@ -307,6 +351,9 @@ const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of
     }
     .rows > dd {
       margin-bottom: 14px;
+    }
+    .interests {
+      grid-template-columns: 1fr;
     }
     .cv-head .btn-row {
       justify-content: flex-start;

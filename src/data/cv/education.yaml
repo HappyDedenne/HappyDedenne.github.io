@@ -1,7 +1,9 @@
 # 学歴（新しい順に書く）
+# level: bachelor / master / doctor（論文の見出し「卒業論文」「修士論文」の出し分けに使う）
 # { en: ..., ja: ... } で英語・日本語を書き分けます。日付や期間は引用符で囲むと安全です。
 
-- period:
+- level: doctor
+  period:
     en: "2024.04 – 2027.03 (expected)"
     ja: "2024.04 – 2027.03"
   degree:
@@ -11,14 +13,16 @@
     en: Communications and Computer Engineering Course, Department of Informatics, Graduate School of Informatics, Kyoto University
     ja: 京都大学大学院 情報学研究科 情報学専攻 通信情報システムコース
   lab: { en: Sato Laboratory, ja: 佐藤研究室 }
+  labUrl: https://vlsi.cce.i.kyoto-u.ac.jp/
   advisor:
-    en: Prof. Takashi Sato (2026.04–); Prof. Hiromitsu Awano (until 2026.03, now at Nagoya University)
-    ja: 佐藤高史 教授（2026年4月〜）、粟野皓光 先生（〜2026年3月、現 名古屋大学）
+    en: Prof. Takashi Sato (2026.04–); Assoc. Prof. Hiromitsu Awano (until 2026.03; now Professor at Nagoya University)
+    ja: 佐藤高史 教授（2026年4月〜）、粟野皓光 准教授（〜2026年3月、現 名古屋大学 教授）
   research:
     en: LUT-based multiplication-free accelerators, SOT-MRAM-based non-volatile SRAM, and LLMs for IC layout generation
     ja: Lookup Table による乗算不要アクセラレータ、SOT-MRAM を用いた不揮発 SRAM、LLM による IC レイアウト自動生成
 
-- period: "2022.04 – 2024.03"
+- level: master
+  period: "2022.04 – 2024.03"
   degree:
     en: Master of Informatics
     ja: 修士課程 修了（修士（情報学））
@@ -26,12 +30,14 @@
     en: Department of Communications and Computer Engineering, Graduate School of Informatics, Kyoto University
     ja: 京都大学大学院 情報学研究科 通信情報システム専攻
   lab: { en: Sato Laboratory, ja: 佐藤研究室 }
-  advisor: { en: Prof. Hiromitsu Awano, ja: 粟野皓光 先生 }
-  research:
-    en: SRAM-based analog computing-in-memory (8T-SRAM with split wordline, leakage-based 12T-SRAM)
-    ja: SRAM を用いたアナログ Compute-in-Memory（スプリットワード線 8T-SRAM、リーク電流で演算する 12T-SRAM）
+  labUrl: https://vlsi.cce.i.kyoto-u.ac.jp/
+  advisor: { en: Assoc. Prof. Hiromitsu Awano, ja: 粟野皓光 准教授 }
+  thesis:
+    en: "“SRAM based Computing-in-Memory Macro for Quantized Neural Networks”"
+    ja: 「SRAMを用いた量子化ニューラルネットワーク向けコンピューティングインメモリマクロ」
 
-- period: "2018.04 – 2022.03"
+- level: bachelor
+  period: "2018.04 – 2022.03"
   degree:
     en: Bachelor of Engineering
     ja: 学士（工学）
@@ -39,7 +45,8 @@
     en: Undergraduate School of Electrical and Electronic Engineering, Faculty of Engineering, Kyoto University
     ja: 京都大学 工学部 電気電子工学科
   lab: { en: Sato Laboratory (from 2021.04), ja: 佐藤研究室（2021年4月〜） }
-  advisor: { en: Prof. Hiromitsu Awano, ja: 粟野皓光 先生 }
-  research:
-    en: 8T-SRAM-based in-memory accelerator for binary neural networks
-    ja: 8T-SRAM を用いた2値化ニューラルネットワーク用インメモリアクセラレータ
+  labUrl: https://vlsi.cce.i.kyoto-u.ac.jp/
+  advisor: { en: Assoc. Prof. Hiromitsu Awano, ja: 粟野皓光 准教授 }
+  thesis:
+    en: "“High-throughput In-Memory Accelerator for Binarized Neural Network based on 8T-SRAM”"
+    ja: 「8T-SRAMを用いた高スループットな2値化ニューラルネットワーク用インメモリアクセラレータ」
