@@ -10,6 +10,16 @@
 # ---- Journal -----------------------------------------------------------
 - type: journal
   authors: [H. Tagata, T. Sato, H. Awano]
+  title: "Leak-CIM: A PVT-Robust and Energy-Efficient SRAM Computing-in-Memory Macro Exploiting Transistor Leakage"
+  venue: IEEE Transactions on Very Large Scale Integration (VLSI) Systems (TVLSI)
+  details: vol. 34, no. 11, pp. 3503–3516
+  date: "2026.11"
+  doi: 10.1109/TVLSI.2026.3732384
+  url: https://ieeexplore.ieee.org/document/11695294
+  selected: true
+
+- type: journal
+  authors: [H. Tagata, T. Sato, H. Awano]
   title: "Double MAC on a Cell: A 22-nm 8T-SRAM-Based Analog In-Memory Accelerator for Binary/Ternary Neural Networks Featuring Split Wordline"
   venue: IEEE Open Journal of Circuits and Systems (OJCAS)
   details: vol. 5, pp. 328–340

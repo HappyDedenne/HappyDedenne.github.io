@@ -16,7 +16,7 @@ export const SITE = {
   },
   lab: { en: 'Sato Laboratory', ja: '佐藤研究室' },
   // 顔写真を public/images/ に置いたらパスを書く（例: '/images/profile.jpg'）。空なら頭文字のプレースホルダー。
-  photo: '',
+  photo: '/images/profile.jpg',
   // CVのPDFを public/ に置いたらパスを書く（例: '/cv.pdf'）。空ならボタンを出さない。
   cvPdf: '',
   // 論文リストで太字にする自分の名前の表記

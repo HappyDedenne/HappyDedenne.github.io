@@ -1,4 +1,4 @@
-# トップページの Research / 研究テーマ。書いた順に表示されます（経歴ページの「研究分野」にも使われます）。
+# 研究テーマ。今は経歴ページの「研究分野」に title と period だけを表示しています（summary・keywords はトップページに戻すとき用）。
 
 - title:
     en: Analog Computing-in-Memory
@@ -34,11 +34,10 @@
   period: 2025–
   summary:
     en: >-
-      A 5T2R non-volatile SRAM cell that combines SRAM with SOT-MRAM to cut standby power,
-      developed within a NEDO project.
+      A 5T2R non-volatile SRAM cell that combines SRAM with SOT-MRAM to cut standby power.
     ja: >-
-      SRAM と SOT-MRAM を組み合わせて待機電力を削減する 5T2R 不揮発 SRAM セル。NEDO プロジェクトの一環として開発しています。
-  keywords: [SOT-MRAM, standby power, NEDO]
+      SRAM と SOT-MRAM を組み合わせて待機電力を削減する 5T2R 不揮発 SRAM セル。
+  keywords: [SOT-MRAM, standby power]
 
 - title:
     en: LLMs for IC Layout Generation

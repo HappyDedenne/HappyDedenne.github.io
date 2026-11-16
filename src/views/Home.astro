@@ -5,7 +5,7 @@ import Window from '../components/Window.astro';
 import PubItem from '../components/PubItem.astro';
 import PostList from '../components/PostList.astro';
 import { SITE, LINKS } from '../config';
-import { byOrder, byYmDesc, getPosts } from '../lib/utils';
+import { byYmDesc, getPosts } from '../lib/utils';
 import { localePath, t, useUI, ymLabel, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -16,7 +16,6 @@ const u = useUI(lang);
 
 const bio = await getEntry('profile', lang);
 const Bio = bio ? (await render(bio)).Content : null;
-const research = (await getCollection('research')).sort(byOrder);
 const news = (await getCollection('news')).sort(byYmDesc).slice(0, 6);
 const selected = (await getCollection('publications', ({ data }) => data.selected)).sort(byYmDesc);
 const posts = (await getPosts()).slice(0, 5);
@@ -30,7 +29,7 @@ const initials = 'HT';
       <div class="photo" class:list={{ placeholder: !SITE.photo }}>
         {
           SITE.photo ? (
-            <img src={SITE.photo} alt={t(SITE.name, lang)} width="200" height="200" />
+            <img src={SITE.photo} alt={t(SITE.name, lang)} width="512" height="512" />
           ) : (
             <span>{initials}</span>
           )
@@ -57,29 +56,6 @@ const initials = 'HT';
         </div>
       </div>
     </div>
-  </Window>
-
-  <Window title={u('home.research')} status={u('home.topics')(research.length)}>
-    <ul class="research">
-      {
-        research.map((r) => (
-          <li class="folder">
-            <div class="folder-head">
-              <h2>{t(r.data.title, lang)}</h2>
-              <span class="mono period">{r.data.period}</span>
-            </div>
-            <p>{t(r.data.summary, lang)}</p>
-            {r.data.keywords.length > 0 && (
-              <div class="tags">
-                {r.data.keywords.map((k) => (
-                  <span class="tag">{k}</span>
-                ))}
-              </div>
-            )}
-          </li>
-        ))
-      }
-    </ul>
   </Window>
 
   <div class="cols">
@@ -181,56 +157,10 @@ const initials = 'HT';
     margin: 0 0 12px;
   }
   .bio :global(p:last-child) {
-    color: var(--muted);
+    margin-bottom: 0;
   }
   .intro .btn-row {
     margin-top: 18px;
-  }
-
-  .research {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 30px 24px;
-    margin: 8px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-  .folder {
-    position: relative;
-    padding: 16px 18px 18px;
-    border: var(--bw) solid var(--ink);
-    background: var(--window);
-  }
-  .folder::before {
-    content: '';
-    position: absolute;
-    left: -2px;
-    top: -14px;
-    width: 72px;
-    height: 12px;
-    border: var(--bw) solid var(--ink);
-    border-bottom: 0;
-    background: var(--teal);
-  }
-  .folder-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .folder h2 {
-    margin: 0;
-    font-size: 1.05rem;
-  }
-  .period {
-    flex: none;
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
-  .folder p {
-    margin: 8px 0 12px;
-    font-size: 0.92rem;
-    line-height: 1.7;
   }
 
   .news {
@@ -274,9 +204,6 @@ const initials = 'HT';
     }
     .photo {
       width: 128px;
-    }
-    .research {
-      grid-template-columns: 1fr;
     }
   }
 </style>
