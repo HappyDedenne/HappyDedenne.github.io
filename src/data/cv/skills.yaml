@@ -1,0 +1,44 @@
+# グループごとに書いた順で表示されます
+# 項目にカンマを含めるときは1行ずつ（- item）書く。ツール名などは英語のままでOK。
+- group: { en: Tape-out, ja: テープアウト }
+  items:
+    - en: Full-custom tape-out from scratch (TSMC 22nm ULL, PSMC 150nm)
+      ja: フルスクラッチでのフルカスタム設計・テープアウト（TSMC 22nm ULL、PSMC 150nm）
+    - en: Simulation-level design (TSMC 7nm)
+      ja: シミュレーションまでの設計（TSMC 7nm）
+
+- group: { en: Analog / Custom IC Design, ja: アナログ・カスタム IC 設計 }
+  items:
+    - Cadence Virtuoso
+    - Cadence Spectre (CLI)
+    - Synopsys HSPICE (CLI)
+    - Synopsys XA (CLI)
+    - Synopsys Custom WaveViewer
+    - Empyrean ALPS / Argus / Aether
+    - LTspice
+
+- group: { en: Physical Verification, ja: 物理検証 }
+  items:
+    - Mentor Calibre (DRC, LVS, xRC, DESIGNrev)
+    - KLayout
+
+- group: { en: Digital Design, ja: デジタル設計 }
+  items:
+    - SystemVerilog
+    - Synopsys Design Compiler
+
+- group: { en: Measurement & Boards, ja: 測定・基板設計 }
+  items:
+    - Advantest EVA100
+    - KiCad
+
+- group: { en: Software, ja: ソフトウェア }
+  items:
+    - Python (PyTorch, Brevitas)
+    - Linux (Ubuntu, Rocky Linux)
+    - VS Code
+
+- group: { en: Graphics, ja: 作図 }
+  items:
+    - Inkscape
+    - Affinity Designer

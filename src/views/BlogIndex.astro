@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Window from '../components/Window.astro';
+import PostList from '../components/PostList.astro';
+import { getPosts, slugifyTag } from '../lib/utils';
+import { localePath, useUI, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const u = useUI(lang);
+const posts = await getPosts();
+const tagCounts = new Map<string, number>();
+for (const p of posts) for (const tg of p.data.tags) tagCounts.set(tg, (tagCounts.get(tg) ?? 0) + 1);
+const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+---
+
+<Base lang={lang} title={u('blog.title')} description={u('blog.lead')}>
+  <Window title={u('blog.title')} status={u('blog.posts')(posts.length)} statusRight="RSS: /rss.xml">
+    <div class="head">
+      <p>{u('blog.lead')}</p>
+      <a class="btn" href="/rss.xml">RSS</a>
+    </div>
+    {
+      tags.length > 0 && (
+        <div class="tags filter">
+          {tags.map(([tg, n]) => (
+            <a class="tag" href={localePath(`/blog/tags/${slugifyTag(tg)}/`, lang)}>
+              #{tg} <span class="muted">{n}</span>
+            </a>
+          ))}
+        </div>
+      )
+    }
+    <PostList posts={posts} lang={lang} empty={u('blog.empty')} />
+  </Window>
+</Base>
+
+<style>
+  .head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .head p {
+    margin: 0 0 14px;
+  }
+  .filter {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px dashed var(--ink);
+  }
+</style>

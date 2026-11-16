@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Window from '../components/Window.astro';
+import PostList from '../components/PostList.astro';
+import type { Post } from '../lib/utils';
+import { localePath, useUI, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  name: string;
+  posts: Post[];
+}
+const { lang, name, posts } = Astro.props;
+const u = useUI(lang);
+---
+
+<Base lang={lang} title={`#${name}`} description={u('blog.tagged')(name)}>
+  <Window title={`#${name}`} status={u('blog.posts')(posts.length)}>
+    <PostList posts={posts} lang={lang} empty={u('blog.empty')} />
+    <div class="back"><a class="btn" href={localePath('/blog/', lang)}>{u('blog.back')}</a></div>
+  </Window>
+</Base>
+
+<style>
+  .back {
+    margin-top: 16px;
+  }
+</style>

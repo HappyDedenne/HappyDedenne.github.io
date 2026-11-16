@@ -1,0 +1,41 @@
+---
+import { SITE } from '../config';
+import { t, useUI, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const u = useUI(lang);
+const year = new Date().getFullYear();
+const built = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
+---
+
+<footer class="footer mono">
+  <span>© {year} {t(SITE.name, lang)}</span>
+  <span aria-hidden="true">·</span>
+  <a href="/rss.xml">RSS</a>
+  <span aria-hidden="true">·</span>
+  <span>{u('footer.builtWith')} <a href="https://astro.build/" rel="noopener">Astro</a></span>
+  <span aria-hidden="true">·</span>
+  <span>{u('footer.updated')} {built}</span>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 10px;
+    padding: 18px 16px 26px;
+    font-size: 0.74rem;
+    color: var(--on-paper-muted);
+  }
+  .footer a {
+    color: var(--on-paper);
+  }
+  .footer a:hover {
+    background: var(--on-paper);
+    color: var(--paper);
+  }
+</style>

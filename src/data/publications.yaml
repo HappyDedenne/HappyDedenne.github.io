@@ -1,0 +1,93 @@
+# 研究業績リスト
+# type: journal（論文誌） / international（国際会議） / domestic（国内発表）
+# date: "YYYY" または "YYYY.MM"（引用符で囲む）
+# 任意項目: details, doi, url, pdf, presentation (oral / poster / oral+poster), note, award, lang (en / ja), selected
+# selected: true にしたものはトップページの「主な研究業績」に出ます。
+# 英語ページと日本語ページで表記を変えたい項目は { en: ..., ja: ... } と書きます（例: venue, note, award, authors）。
+# タイトルは原文のまま（英語論文は英語、国内発表は日本語）表示します。
+# 並び順はページ側で date の新しい順に自動ソートされます。
+
+# ---- Journal -----------------------------------------------------------
+- type: journal
+  authors: [H. Tagata, T. Sato, H. Awano]
+  title: "Double MAC on a Cell: A 22-nm 8T-SRAM-Based Analog In-Memory Accelerator for Binary/Ternary Neural Networks Featuring Split Wordline"
+  venue: IEEE Open Journal of Circuits and Systems (OJCAS)
+  details: vol. 5, pp. 328–340
+  date: "2024"
+  doi: 10.1109/OJCAS.2024.3482469
+  selected: true
+
+# ---- International conferences (peer-reviewed) -------------------------
+- type: international
+  authors: [H. Tagata, T. Sato, H. Awano]
+  title: "PALETTE: A Reconfigurable LUT-CIM Macro Featuring On-Chip Parallel LUT Update and Pipelined Accumulation"
+  venue: ACM/IEEE International Conference on Computer-Aided Design (ICCAD)
+  date: "2026.11"
+  note: { en: "Acceptance rate 25.3% (370/1464)", ja: "採択率 25.3%（370/1464）" }
+  selected: true
+
+- type: international
+  authors: [H. Tagata, T. Sato, H. Awano]
+  title: "Lookup Table-based Multiplication-free All-digital DNN Accelerator Featuring Self-Synchronous Pipeline Accumulation"
+  venue: ACM/IEEE Design Automation Conference (DAC)
+  details: San Francisco, CA, USA, pp. 1–7
+  date: "2025.06"
+  doi: 10.1109/DAC63849.2025.11132097
+  note: { en: "Acceptance rate 22.5% (420/1862)", ja: "採択率 22.5%（420/1862）" }
+  selected: true
+
+# ---- Domestic (non-refereed, in Japanese) -------------------------------
+- type: domestic
+  lang: ja
+  authors: { en: [H. Tagata, T. Sato, H. Awano], ja: [田形寛斗, 佐藤高史, 粟野皓光] }
+  title: 乗算をLUTで代替するビットスケーラブルな量子化ニューラルネットワーク向けインメモリアクセラレータ
+  venue: { en: IEICE LSI and Systems Workshop 2025, ja: LSIとシステムのワークショップ 2025 }
+  date: "2025.05"
+  presentation: poster
+  award: { en: Outstanding Student Poster Award, ja: 優秀ポスター賞（学生部門） }
+
+- type: domestic
+  lang: ja
+  authors: { en: [H. Tagata, T. Sato, H. Awano], ja: [田形寛斗, 佐藤高史, 粟野皓光] }
+  title: ダイナミック比較器と Lookup Table を用いた乗算不要な機械学習向けインメモリアクセラレータ
+  venue: { en: IEICE LSI and Systems Workshop 2024, ja: LSIとシステムのワークショップ 2024 }
+  date: "2024.05"
+  presentation: poster
+  award: { en: Outstanding Student Poster Award, ja: 優秀ポスター賞（学生部門） }
+
+- type: domestic
+  lang: ja
+  authors: { en: [H. Tagata, T. Sato, H. Awano], ja: [田形寛斗, 佐藤高史, 粟野皓光] }
+  title: リーク電流で演算する量子化ニューラルネットワーク用 12T-SRAM インメモリアクセラレータ
+  venue: { en: IPSJ DA Symposium 2023, ja: 情報処理学会 DAシンポジウム 2023 }
+  details: pp. 228–234
+  date: "2023.09"
+  presentation: oral+poster
+  award: { en: IPSJ Computer Science Research Award for Young Scientists, ja: 情報処理学会 コンピュータサイエンス領域奨励賞 }
+
+- type: domestic
+  lang: ja
+  authors: { en: [H. Tagata, T. Sato, H. Awano], ja: [田形寛斗, 佐藤高史, 粟野皓光] }
+  title: Dual-input 8T-SRAM based Flash ADC-less In-memory Accelerator for Binary Neural Network
+  venue: { en: IEICE ICD/CAS Student and Young Researcher Workshop, ja: 電子情報通信学会 ICD/CAS 学生・若手研究会 }
+  date: "2022.12"
+  presentation: oral+poster
+
+- type: domestic
+  lang: ja
+  authors: { en: [H. Tagata, T. Sato, H. Awano], ja: [田形寛斗, 佐藤高史, 粟野皓光] }
+  title: 8T-SRAM を用いた同時 2 入力可能な 2 値化ニューラルネットワーク用インメモリアクセラレータ
+  venue: { en: IPSJ DA Symposium 2022, ja: 情報処理学会 DAシンポジウム 2022 }
+  details: pp. 120–125
+  date: "2022.09"
+  presentation: oral+poster
+  award: { en: Outstanding Poster Presentation Award, ja: 優秀ポスター発表賞 }
+
+- type: domestic
+  lang: ja
+  authors: { en: [H. Tagata, T. Sato, H. Awano], ja: [田形寛斗, 佐藤高史, 粟野皓光] }
+  title: 8T-SRAM を用いた高スループットな 2 値化ニューラルネットワーク用インメモリアクセラレータ
+  venue: { en: IEICE Technical Committee on VLSI Design Technologies (VLD), ja: 電子情報通信学会 VLSI設計技術研究会 }
+  details: VLD2021-88, pp. 63–68
+  date: "2022.03"
+  presentation: oral

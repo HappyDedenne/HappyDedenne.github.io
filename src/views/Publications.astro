@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Window from '../components/Window.astro';
+import PubSections from '../components/PubSections.astro';
+import { byYmDesc } from '../lib/utils';
+import { SITE } from '../config';
+import { t, useUI, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const u = useUI(lang);
+const all = (await getCollection('publications')).sort(byYmDesc);
+const count = (type: string) => all.filter((p) => p.data.type === type).length;
+const summary = `J ${count('journal')} · C ${count('international')} · D ${count('domestic')}`;
+const description =
+  lang === 'ja' ? `${t(SITE.name, lang)}の研究業績一覧。` : `Publications of ${t(SITE.name, lang)}.`;
+---
+
+<Base lang={lang} title={u('pub.title')} description={description}>
+  <Window title={u('pub.title')} status={u('pub.items')(all.length)} statusRight={summary}>
+    <PubSections pubs={all} lang={lang} />
+  </Window>
+</Base>

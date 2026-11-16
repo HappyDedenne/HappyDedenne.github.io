@@ -1,0 +1,84 @@
+# インターン・職歴・研修（新しい順に書く）
+# category: internship（インターンシップ） / employment（アルバイト・RA・研究員） / training（研修）
+# kind（employment のみ）: ra / fellow / parttime / oa / mentor  → 経歴ページにラベルとして表示
+# 期間は "2026.02" のように引用符で囲む（数値として読まれるのを防ぐため）
+
+# ---- Internships ---------------------------------------------------------
+- period: "2026.02"
+  category: internship
+  org: { en: Sony Semiconductor Solutions Corporation, ja: ソニーセミコンダクタソリューションズ株式会社 }
+  title: { en: Spring Internship (2 weeks), ja: 春季インターンシップ（2週間） }
+  place: { en: "Atsugi, Japan", ja: 厚木 }
+
+- period: "2025.08 – 2025.09"
+  category: internship
+  org: { en: TSMC Headquarters, ja: TSMC 本社 }
+  title: { en: DNA Summer Internship (6 weeks), ja: DNA Summer Internship（6週間） }
+  place: { en: "Hsinchu, Taiwan", ja: 台湾・新竹 }
+
+- period: "2024.08 – 2024.09"
+  category: internship
+  org: { en: TSMC Headquarters, ja: TSMC 本社 }
+  title: { en: DNA Summer Internship (8 weeks), ja: DNA Summer Internship（8週間） }
+  place: { en: "Hsinchu, Taiwan", ja: 台湾・新竹 }
+
+- period: "2022.08 – 2022.09"
+  category: internship
+  org: { en: TSMC Japan Design Center, ja: TSMC ジャパンデザインセンター }
+  title: { en: Summer Internship (16 days), ja: 夏季インターンシップ（16日間） }
+  place: { en: "Yokohama, Japan", ja: 横浜 }
+
+- period: "2020.08"
+  category: internship
+  org: { en: Japan Self-Defense Forces Aichi Provincial Cooperation Office, ja: 自衛隊愛知地方協力本部 }
+  title: { en: Summer Internship (5 days), ja: 夏季インターンシップ（5日間） }
+  place: { en: "Aichi, Japan", ja: 愛知 }
+
+# ---- Employment (part-time / RA / research fellow) -------------------------
+- period: "2025 – 2026"
+  category: employment
+  kind: ra
+  org: { en: "Niitsu Laboratory, Kyoto University", ja: 京都大学 新津研究室 }
+  title: { en: Research Assistant, ja: リサーチアシスタント }
+
+- period: "2024.04 – 2027.03"
+  category: employment
+  kind: fellow
+  org:
+    en: Next-Generation AI Program (AI BOOST), Kyoto University
+    ja: 京都大学大学院教育支援機構 次世代AIプログラム（AI BOOST）
+  title: { en: Research Fellow, ja: 奨励研究員 }
+
+- period: "2024 – 2027"
+  category: employment
+  kind: ra
+  org: { en: "Sato Laboratory, Kyoto University", ja: 京都大学 佐藤研究室 }
+  title: { en: Research Assistant, ja: リサーチアシスタント }
+
+- period: "2022 – 2024"
+  category: employment
+  kind: oa
+  org: { en: "Sato Laboratory, Kyoto University", ja: 京都大学 佐藤研究室 }
+  title: { en: Office Assistant, ja: オフィスアシスタント }
+
+- period: "2022 – 2024"
+  category: employment
+  kind: mentor
+  org: { en: "Kyoto iUP, Kyoto University", ja: 京都大学 Kyoto iUP }
+  title: { en: Peer Mentor for International Students, ja: 留学生サポートメンター }
+
+- period: "2022 – 2023"
+  category: employment
+  kind: parttime
+  org: { en: Congrès Inc., ja: 株式会社コングレ }
+  title:
+    en: Reception Staff, Kyoto University Clock Tower Centennial Hall (1.5 years)
+    ja: 京都大学 時計台 総合受付（約1年半）
+
+# ---- Training ------------------------------------------------------------
+- period: "2026.06 – 2026.07"
+  category: training
+  org: { en: ADiP, ja: ADiP }
+  title:
+    en: Digital Circuit Design Course (Intermediate), hands-on exercises (14 days)
+    ja: デジタル回路設計 中級コース 演習（14日間）

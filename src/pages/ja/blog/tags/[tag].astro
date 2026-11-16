@@ -1,0 +1,17 @@
+---
+import Tag from '../../../../views/Tag.astro';
+import { getTagMap, type Post } from '../../../../lib/utils';
+
+export async function getStaticPaths() {
+  const map = await getTagMap();
+  return [...map.entries()].map(([tag, v]) => ({ params: { tag }, props: v }));
+}
+
+interface Props {
+  name: string;
+  posts: Post[];
+}
+const { name, posts } = Astro.props;
+---
+
+<Tag lang="ja" name={name} posts={posts} />

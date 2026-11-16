@@ -1,0 +1,124 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { SITE } from '../config';
+import { t, useUI, ymLabel, type Lang } from '../i18n/ui';
+
+interface Props {
+  pub: CollectionEntry<'publications'>;
+  label: string;
+  lang: Lang;
+}
+const { pub, label, lang } = Astro.props;
+const u = useUI(lang);
+const d = pub.data;
+const authors = t(d.authors, lang) ?? [];
+const venue = t(d.venue, lang);
+const details = t(d.details, lang);
+const note = t(d.note, lang);
+const award = t(d.award, lang);
+const isMe = (a: string) => SITE.me.includes(a);
+const sep = lang === 'ja' && /[^\x00-\x7F]/.test(authors.join('')) ? '、' : ', ';
+const presentation = d.presentation ? u(`pub.${d.presentation}`) : undefined;
+---
+
+<li class="pub">
+  <span class="label mono" aria-hidden="true">{label}</span>
+  <div class="body">
+    <p class="authors">
+      {
+        authors.map((a, i) => (
+          <>
+            {isMe(a) ? <strong>{a}</strong> : a}
+            {i < authors.length - 1 ? sep : ''}
+          </>
+        ))
+      }
+    </p>
+    <p class="title" lang={d.lang}>{d.lang === 'ja' ? `「${d.title}」` : `“${d.title}”`}</p>
+    <p class="venue">
+      <span class="venue-name">{venue}</span>{details && <>, {details}</>}, {ymLabel(d.date, lang)}.
+    </p>
+    <div class="tags">
+      {award && <span class="tag hl">★ {award}</span>}
+      {
+        d.doi && (
+          <a class="tag" href={`https://doi.org/${d.doi}`} rel="noopener">
+            DOI ↗
+          </a>
+        )
+      }
+      {
+        d.url && (
+          <a class="tag" href={d.url} rel="noopener">
+            Link ↗
+          </a>
+        )
+      }
+      {
+        d.pdf && (
+          <a class="tag" href={d.pdf}>
+            PDF
+          </a>
+        )
+      }
+      {presentation && <span class="tag dim">{presentation}</span>}
+      {note && <span class="tag dim">{note}</span>}
+      {d.lang === 'ja' && lang === 'en' && <span class="tag dim">{u('pub.inJapanese')}</span>}
+    </div>
+  </div>
+</li>
+
+<style>
+  .pub {
+    display: grid;
+    grid-template-columns: 3.2em 1fr;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+  }
+  .pub:last-child {
+    border-bottom: 0;
+  }
+  .label {
+    align-self: start;
+    padding: 1px 0;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--window);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+  }
+  p {
+    margin: 0;
+  }
+  .authors {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .authors strong {
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--teal);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .title {
+    margin: 2px 0;
+    font-weight: 650;
+    line-height: 1.5;
+  }
+  .venue {
+    font-size: 0.9rem;
+  }
+  .venue-name {
+    font-style: italic;
+  }
+  :global(:lang(ja)) .venue-name {
+    font-style: normal;
+  }
+  .tags {
+    margin-top: 8px;
+  }
+</style>

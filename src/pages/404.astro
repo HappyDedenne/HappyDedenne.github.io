@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import Window from '../components/Window.astro';
+---
+
+<Base lang="en" title="Not Found" alt="/ja/" hreflang={false}>
+  <div class="center">
+    <Window title="System Message" class="dialog" status="Error 404">
+      <div class="msg">
+        <svg class="icon" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16 3 30 28H2Z" fill="var(--hl)" stroke="currentColor" stroke-width="2" stroke-linejoin="miter"></path>
+          <rect x="15" y="11" width="2" height="9" fill="currentColor"></rect>
+          <rect x="15" y="22" width="2" height="2" fill="currentColor"></rect>
+        </svg>
+        <div>
+          <h1>Sorry, this page could not be found.</h1>
+          <p class="muted">The file may have been moved or deleted.</p>
+          <p class="muted" lang="ja">お探しのページは見つかりませんでした。移動または削除された可能性があります。</p>
+        </div>
+      </div>
+      <div class="actions">
+        <a class="btn" href="javascript:history.back()">Go Back</a>
+        <a class="btn" href="/ja/" lang="ja">日本語トップへ</a>
+        <a class="btn primary" href="/">Restart</a>
+      </div>
+    </Window>
+  </div>
+</Base>
+
+<style>
+  .center {
+    display: grid;
+    place-items: center;
+    min-height: 50vh;
+  }
+  .center :global(.dialog) {
+    width: min(500px, 100%);
+  }
+  .msg {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .icon {
+    flex: none;
+    width: 40px;
+    height: 40px;
+  }
+  h1 {
+    margin: 2px 0 6px;
+    font-size: 1.1rem;
+  }
+  p {
+    margin: 0 0 4px;
+    font-size: 0.9rem;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 22px;
+  }
+</style>

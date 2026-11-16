@@ -1,0 +1,55 @@
+---
+// 研究業績を「論文誌 / 国際会議 / 国内」に分けて表示（研究業績ページと経歴ページで共用）
+import type { CollectionEntry } from 'astro:content';
+import PubItem from './PubItem.astro';
+import { useUI, type Lang } from '../i18n/ui';
+
+interface Props {
+  pubs: CollectionEntry<'publications'>[];
+  lang: Lang;
+  /** 見出しのレベル（ページ内の位置に合わせる） */
+  level?: 2 | 3;
+}
+const { pubs, lang, level = 2 } = Astro.props;
+const u = useUI(lang);
+
+const groups = [
+  { type: 'journal', key: 'pub.journal', prefix: 'J' },
+  { type: 'international', key: 'pub.international', prefix: 'C' },
+  { type: 'domestic', key: 'pub.domestic', prefix: 'D' },
+] as const;
+
+const sections = groups
+  .map((g) => ({ ...g, items: pubs.filter((p) => p.data.type === g.type) }))
+  .filter((g) => g.items.length > 0);
+const H = level === 2 ? 'h2' : 'h3';
+---
+
+{
+  sections.map((s) => (
+    <section>
+      <H class:list={['sec-head', { sub: level === 3 }]}>
+        {u(s.key)}
+        <span class="count">{s.items.length}</span>
+      </H>
+      <ol class="pubs">
+        {s.items.map((p, i) => (
+          <PubItem pub={p} lang={lang} label={`${s.prefix}${s.items.length - i}`} />
+        ))}
+      </ol>
+    </section>
+  ))
+}
+
+<style>
+  .pubs {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .sub {
+    margin-top: 18px;
+    border-bottom-style: dotted;
+    font-size: 0.95rem;
+  }
+</style>

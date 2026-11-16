@@ -1,0 +1,315 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Window from '../components/Window.astro';
+import PubSections from '../components/PubSections.astro';
+import { SITE, LINKS } from '../config';
+import { byOrder, byYmDesc } from '../lib/utils';
+import { t, useUI, ymLabel, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const u = useUI(lang);
+
+const education = (await getCollection('education')).sort(byOrder);
+const research = (await getCollection('research')).sort(byOrder);
+const experience = (await getCollection('experience')).sort(byOrder);
+const internships = experience.filter((e) => e.data.category === 'internship');
+const employment = experience.filter((e) => e.data.category === 'employment');
+const training = experience.filter((e) => e.data.category === 'training');
+const pubs = (await getCollection('publications')).sort(byYmDesc);
+const awards = (await getCollection('awards')).sort(byYmDesc);
+const fellowships = (await getCollection('fellowships')).sort(byOrder);
+const skills = (await getCollection('skills')).sort(byOrder);
+const activities = (await getCollection('activities')).sort(byOrder);
+const links = LINKS.filter((l) => l.href);
+const name = t(SITE.name, lang);
+const description = lang === 'ja' ? `${name}の経歴。` : `Curriculum vitae of ${name}.`;
+---
+
+<Base lang={lang} title={u('cv.title')} description={description}>
+  <Window title={u('cv.title')} status={name} statusRight={t(SITE.affiliation, lang)}>
+    <div class="cv-head">
+      <div>
+        <h1>{name} <span class="alt">{t(SITE.altName, lang)}</span></h1>
+        <p class="muted mono">{t(SITE.role, lang)} · {t(SITE.affiliation, lang)}</p>
+      </div>
+      <div class="btn-row">
+        {SITE.cvPdf && <a class="btn primary" href={SITE.cvPdf}>{u('cv.pdf')}</a>}
+        {
+          links.map((l) => (
+            <a class="btn" href={l.href} rel="noopener">
+              {l.label} ↗
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <h2 class="sec-head">{u('cv.education')}</h2>
+    <dl class="rows">
+      {
+        education.map((e) => (
+          <>
+            <dt class="mono">{t(e.data.period, lang)}</dt>
+            <dd>
+              <strong>{t(e.data.degree, lang)}</strong>
+              <div>{t(e.data.school, lang)}</div>
+              <dl class="meta">
+                {e.data.lab && (
+                  <>
+                    <dt>{u('cv.lab')}</dt>
+                    <dd>{t(e.data.lab, lang)}</dd>
+                  </>
+                )}
+                {e.data.advisor && (
+                  <>
+                    <dt>{u('cv.advisor')}</dt>
+                    <dd>{t(e.data.advisor, lang)}</dd>
+                  </>
+                )}
+                {e.data.research && (
+                  <>
+                    <dt>{u('cv.research')}</dt>
+                    <dd>{t(e.data.research, lang)}</dd>
+                  </>
+                )}
+              </dl>
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    <h2 class="sec-head">{u('cv.interests')}</h2>
+    <dl class="rows">
+      {
+        research.map((r) => (
+          <>
+            <dt class="mono">{r.data.period}</dt>
+            <dd>
+              <strong>{t(r.data.title, lang)}</strong>
+              <div class="muted small">{t(r.data.summary, lang)}</div>
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    <h2 class="sec-head">{u('cv.internships')} <span class="count">{internships.length}</span></h2>
+    <dl class="rows">
+      {
+        internships.map((e) => (
+          <>
+            <dt class="mono">{e.data.period}</dt>
+            <dd>
+              <strong>{t(e.data.org, lang)}</strong>
+              {e.data.place && <span class="muted"> — {t(e.data.place, lang)}</span>}
+              <div>{t(e.data.title, lang)}</div>
+              {e.data.note && <div class="muted">{t(e.data.note, lang)}</div>}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    <h2 class="sec-head">{u('cv.employment')}</h2>
+    <dl class="rows">
+      {
+        employment.map((e) => (
+          <>
+            <dt class="mono">{e.data.period}</dt>
+            <dd>
+              <strong>{t(e.data.org, lang)}</strong>
+              <div>
+                {t(e.data.title, lang)}{' '}
+                {e.data.kind && <span class="tag dim">{u(`cv.kind.${e.data.kind}`)}</span>}
+              </div>
+              {e.data.note && <div class="muted">{t(e.data.note, lang)}</div>}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    {
+      training.length > 0 && (
+        <>
+          <h2 class="sec-head">{u('cv.training')}</h2>
+          <dl class="rows">
+            {training.map((e) => (
+              <>
+                <dt class="mono">{e.data.period}</dt>
+                <dd>
+                  <strong>{t(e.data.org, lang)}</strong>
+                  <div>{t(e.data.title, lang)}</div>
+                </dd>
+              </>
+            ))}
+          </dl>
+        </>
+      )
+    }
+
+    <h2 class="sec-head">{u('cv.publications')} <span class="count">{pubs.length}</span></h2>
+    <PubSections pubs={pubs} lang={lang} level={3} />
+
+    <h2 class="sec-head">{u('cv.awards')} <span class="count">{awards.length}</span></h2>
+    <dl class="rows">
+      {
+        awards.map((a) => (
+          <>
+            <dt class="mono">{ymLabel(a.data.date, lang)}</dt>
+            <dd>
+              <strong>{t(a.data.title, lang)}</strong>
+              <div>{t(a.data.org, lang)}</div>
+              {a.data.work && <div class="muted small">{t(a.data.work, lang)}</div>}
+              {a.data.note && <span class="tag hl">{t(a.data.note, lang)}</span>}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    <h2 class="sec-head">{u('cv.scholarships')}</h2>
+    <dl class="rows">
+      {
+        fellowships.map((f) => (
+          <>
+            <dt class="mono">{f.data.period}</dt>
+            <dd>
+              <strong>{t(f.data.title, lang)}</strong>
+              {f.data.org && <div>{t(f.data.org, lang)}</div>}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    <h2 class="sec-head">{u('cv.skills')}</h2>
+    <dl class="rows skills">
+      {
+        skills.map((s) => (
+          <>
+            <dt>{t(s.data.group, lang)}</dt>
+            <dd class="tags">
+              {s.data.items.map((i) => (
+                <span class="tag">{t(i, lang)}</span>
+              ))}
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+
+    <h2 class="sec-head">{u('cv.activities')}</h2>
+    <dl class="rows">
+      {
+        activities.map((a) => (
+          <>
+            <dt class="mono">{a.data.period ?? ''}</dt>
+            <dd>
+              {a.data.org && <strong>{t(a.data.org, lang)}</strong>}
+              <div>{t(a.data.title, lang)}</div>
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+  </Window>
+</Base>
+
+<style>
+  .cv-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .cv-head .btn-row {
+    max-width: 420px;
+    justify-content: flex-end;
+  }
+  h1 {
+    margin: 0 0 4px;
+    font-size: 1.9rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  h1 .alt {
+    margin-left: 8px;
+    font-size: 0.5em;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  .cv-head p {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+  .rows {
+    display: grid;
+    grid-template-columns: 11.5em 1fr;
+    gap: 14px 20px;
+    margin: 0;
+  }
+  .rows > dt {
+    padding-top: 2px;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .rows > dd {
+    margin: 0;
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+  .rows > dd > .tag {
+    margin-top: 4px;
+  }
+  .small {
+    font-size: 0.86rem;
+  }
+  .meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 10px;
+    margin: 6px 0 0;
+    font-size: 0.86rem;
+  }
+  .meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+  .meta dd {
+    margin: 0;
+  }
+  .skills > dt {
+    color: var(--ink);
+    font-weight: 650;
+    font-size: 0.85rem;
+  }
+  .skills dd {
+    gap: 6px;
+  }
+  .skills .tag {
+    white-space: normal;
+  }
+  @media (max-width: 640px) {
+    .rows {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .rows > dd {
+      margin-bottom: 14px;
+    }
+    .cv-head .btn-row {
+      justify-content: flex-start;
+    }
+  }
+</style>

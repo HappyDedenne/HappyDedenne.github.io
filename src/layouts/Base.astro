@@ -1,0 +1,82 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/noto-sans-jp';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import MenuBar from '../components/MenuBar.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+import { switchPath, t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** 反対言語版ページの URL（省略時は /ja/ を付け外ししたもの） */
+  alt?: string;
+  /** 反対言語版が同じ内容の別言語ページか（hreflang を出すか） */
+  hreflang?: boolean;
+  narrow?: boolean;
+  type?: 'website' | 'article';
+}
+
+const {
+  lang,
+  title,
+  description = t(SITE.description, lang),
+  alt = switchPath(Astro.url.pathname).href,
+  hreflang = true,
+  narrow = false,
+  type = 'website',
+} = Astro.props;
+const name = t(SITE.name, lang)!;
+const fullTitle = title ? `${title} — ${name}` : `${name} | ${t(SITE.altName, lang)}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const altUrl = new URL(alt, Astro.site);
+const other: Lang = lang === 'en' ? 'ja' : 'en';
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {
+      hreflang && (
+        <>
+          <link rel="alternate" hreflang={lang} href={canonical} />
+          <link rel="alternate" hreflang={other} href={altUrl} />
+        </>
+      )
+    }
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${name} — Blog`} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={name} />
+    <meta property="og:locale" content={lang === 'ja' ? 'ja_JP' : 'en_US'} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="generator" content={Astro.generator} />
+    <slot name="head" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="visually-hidden" href="#content">{lang === 'ja' ? '本文へ移動' : 'Skip to content'}</a>
+    <MenuBar lang={lang} alt={alt} />
+    <main id="content" class:list={{ narrow }}>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

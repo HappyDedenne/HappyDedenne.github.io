@@ -1,0 +1,53 @@
+# トップページの Research / 研究テーマ。書いた順に表示されます（経歴ページの「研究分野」にも使われます）。
+
+- title:
+    en: Analog Computing-in-Memory
+    ja: アナログ Compute-in-Memory
+  period: 2022–
+  summary:
+    en: >-
+      SRAM-based in-memory accelerators that perform multiply-accumulate operations inside the
+      memory array, aiming at high throughput and energy efficiency for binary, ternary, and
+      quantized neural networks while staying robust to PVT variation.
+    ja: >-
+      メモリアレイの中で積和演算を行う SRAM ベースのインメモリアクセラレータ。2値・3値・量子化ニューラルネットワークを対象に、
+      PVT ばらつきへの耐性を保ちながら、高いスループットとエネルギー効率を目指しています。
+  keywords: [8T-SRAM, split wordline, leakage-based computing]
+
+- title:
+    en: LUT-based Multiplication-free Accelerators
+    ja: Lookup Table による乗算不要アクセラレータ
+  period: 2024–
+  summary:
+    en: >-
+      Accelerators that replace multipliers with lookup tables, covering both an all-digital
+      design with self-synchronous pipeline accumulation and a reconfigurable, bit-flexible
+      LUT-based computing-in-memory macro.
+    ja: >-
+      乗算器を Lookup Table で置き換えるアクセラレータ。自己同期型のパイプライン累算を備えた全デジタル設計と、
+      ビット幅を柔軟に変えられる再構成可能な LUT 型インメモリマクロの両方に取り組んでいます。
+  keywords: [lookup table, bit-flexible, DAC 2025, ICCAD 2026]
+
+- title:
+    en: Non-volatile SRAM with SOT-MRAM
+    ja: SOT-MRAM を用いた不揮発 SRAM
+  period: 2025–
+  summary:
+    en: >-
+      A 5T2R non-volatile SRAM cell that combines SRAM with SOT-MRAM to cut standby power,
+      developed within a NEDO project.
+    ja: >-
+      SRAM と SOT-MRAM を組み合わせて待機電力を削減する 5T2R 不揮発 SRAM セル。NEDO プロジェクトの一環として開発しています。
+  keywords: [SOT-MRAM, standby power, NEDO]
+
+- title:
+    en: LLMs for IC Layout Generation
+    ja: LLM による IC レイアウト自動生成
+  period: 2026–
+  summary:
+    en: >-
+      Using large language models to automate analog and custom IC layout, a step that still
+      depends heavily on manual work.
+    ja: >-
+      いまも人手に頼る部分が大きいアナログ・カスタム IC のレイアウト設計を、大規模言語モデルで自動化する研究です。
+  keywords: [LLM, layout automation, EDA]

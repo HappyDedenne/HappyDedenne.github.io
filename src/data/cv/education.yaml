@@ -1,0 +1,45 @@
+# 学歴（新しい順に書く）
+# { en: ..., ja: ... } で英語・日本語を書き分けます。日付や期間は引用符で囲むと安全です。
+
+- period:
+    en: "2024.04 – 2027.03 (expected)"
+    ja: "2024.04 – 2027.03"
+  degree:
+    en: Ph.D. Program in Informatics
+    ja: 博士後期課程（2027年3月 修了見込み）
+  school:
+    en: Communications and Computer Engineering Course, Department of Informatics, Graduate School of Informatics, Kyoto University
+    ja: 京都大学大学院 情報学研究科 情報学専攻 通信情報システムコース
+  lab: { en: Sato Laboratory, ja: 佐藤研究室 }
+  advisor:
+    en: Prof. Takashi Sato (2026.04–); Prof. Hiromitsu Awano (until 2026.03, now at Nagoya University)
+    ja: 佐藤高史 教授（2026年4月〜）、粟野皓光 先生（〜2026年3月、現 名古屋大学）
+  research:
+    en: LUT-based multiplication-free accelerators, SOT-MRAM-based non-volatile SRAM, and LLMs for IC layout generation
+    ja: Lookup Table による乗算不要アクセラレータ、SOT-MRAM を用いた不揮発 SRAM、LLM による IC レイアウト自動生成
+
+- period: "2022.04 – 2024.03"
+  degree:
+    en: Master of Informatics
+    ja: 修士課程 修了（修士（情報学））
+  school:
+    en: Department of Communications and Computer Engineering, Graduate School of Informatics, Kyoto University
+    ja: 京都大学大学院 情報学研究科 通信情報システム専攻
+  lab: { en: Sato Laboratory, ja: 佐藤研究室 }
+  advisor: { en: Prof. Hiromitsu Awano, ja: 粟野皓光 先生 }
+  research:
+    en: SRAM-based analog computing-in-memory (8T-SRAM with split wordline, leakage-based 12T-SRAM)
+    ja: SRAM を用いたアナログ Compute-in-Memory（スプリットワード線 8T-SRAM、リーク電流で演算する 12T-SRAM）
+
+- period: "2018.04 – 2022.03"
+  degree:
+    en: Bachelor of Engineering
+    ja: 学士（工学）
+  school:
+    en: Undergraduate School of Electrical and Electronic Engineering, Faculty of Engineering, Kyoto University
+    ja: 京都大学 工学部 電気電子工学科
+  lab: { en: Sato Laboratory (from 2021.04), ja: 佐藤研究室（2021年4月〜） }
+  advisor: { en: Prof. Hiromitsu Awano, ja: 粟野皓光 先生 }
+  research:
+    en: 8T-SRAM-based in-memory accelerator for binary neural networks
+    ja: 8T-SRAM を用いた2値化ニューラルネットワーク用インメモリアクセラレータ

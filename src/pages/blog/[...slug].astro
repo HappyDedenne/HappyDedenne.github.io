@@ -1,0 +1,177 @@
+---
+import 'katex/dist/katex.min.css';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Window from '../../components/Window.astro';
+import { getPosts, isoDate, slugifyTag, type Post } from '../../lib/utils';
+import { localePath, useUI, type Lang } from '../../i18n/ui';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+interface Props {
+  post: Post;
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
+const d = post.data;
+// 記事ページは記事の言語で表示。言語切替ボタンは反対言語の記事一覧へ。
+const lang: Lang = d.lang;
+const other: Lang = lang === 'en' ? 'ja' : 'en';
+const u = useUI(lang);
+const body = post.body ?? '';
+const minutes = Math.max(
+  1,
+  Math.round(
+    lang === 'ja' ? body.replace(/\s/g, '').length / 500 : body.split(/\s+/).filter(Boolean).length / 220,
+  ),
+);
+const toc = headings.filter((h) => h.depth === 2);
+---
+
+<Base
+  lang={lang}
+  title={d.title}
+  description={d.description}
+  alt={localePath('/blog/', other)}
+  hreflang={false}
+  narrow
+  type="article"
+>
+  <Window
+    as="article"
+    title={`${post.id}.md`}
+    status={u('blog.minRead')(minutes)}
+    statusRight={d.updatedDate ? `${u('blog.updated')} ${isoDate(d.updatedDate)}` : isoDate(d.pubDate)}
+  >
+    <header class="post-head">
+      <p class="meta mono">
+        <time datetime={isoDate(d.pubDate)}>{isoDate(d.pubDate)}</time>
+        {d.draft && <span class="tag hl">DRAFT</span>}
+      </p>
+      <h1>{d.title}</h1>
+      {d.description && <p class="lede">{d.description}</p>}
+      {
+        d.tags.length > 0 && (
+          <div class="tags">
+            {d.tags.map((tg) => (
+              <a class="tag" href={localePath(`/blog/tags/${slugifyTag(tg)}/`, lang)}>
+                #{tg}
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </header>
+
+    {
+      toc.length >= 3 && (
+        <nav class="toc" aria-label={u('blog.contents')}>
+          <p class="mono">{u('blog.contents')}</p>
+          <ol>
+            {toc.map((h) => (
+              <li>
+                <a href={`#${h.slug}`}>{h.text}</a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+  </Window>
+
+  <nav class="pager" aria-label="More posts">
+    {
+      older ? (
+        <a class="btn" href={`/blog/${older.id}/`}>
+          ← {older.data.title}
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    <a class="btn" href={localePath('/blog/', lang)}>{u('blog.all')}</a>
+    {
+      newer ? (
+        <a class="btn" href={`/blog/${newer.id}/`}>
+          {newer.data.title} →
+        </a>
+      ) : (
+        <span />
+      )
+    }
+  </nav>
+</Base>
+
+<style>
+  .post-head {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: var(--bw) solid var(--ink);
+  }
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  h1 {
+    margin: 0 0 10px;
+    font-size: clamp(1.6rem, 3.6vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .lede {
+    margin: 0 0 12px;
+    color: var(--muted);
+  }
+  .toc {
+    margin: 0 0 28px;
+    padding: 12px 16px;
+    border: 1.5px dashed var(--ink);
+    font-size: 0.9rem;
+  }
+  .toc p {
+    margin: 0 0 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 1.4em;
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .pager .btn:first-child {
+    justify-self: start;
+  }
+  .pager .btn:last-child {
+    justify-self: end;
+  }
+  @media (max-width: 640px) {
+    .pager {
+      grid-template-columns: 1fr;
+    }
+    .pager .btn {
+      justify-self: stretch !important;
+    }
+  }
+</style>

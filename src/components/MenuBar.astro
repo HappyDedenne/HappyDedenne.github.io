@@ -1,0 +1,241 @@
+---
+import { NAV, SITE } from '../config';
+import { localePath, t, useUI, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** 反対言語版ページの URL */
+  alt: string;
+}
+const { lang, alt } = Astro.props;
+const u = useUI(lang);
+const path = Astro.url.pathname;
+const isActive = (href: string) => {
+  const full = localePath(href, lang);
+  return href === '/' ? path === full || path === full.replace(/\/$/, '') : path.startsWith(full);
+};
+const enHref = lang === 'en' ? Astro.url.pathname : alt;
+const jaHref = lang === 'ja' ? Astro.url.pathname : alt;
+---
+
+<header class="menubar">
+  <a class="brand" href={localePath('/', lang)} aria-label="Home">
+    <svg class="chip" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="6" y="6" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"></rect>
+      <rect x="9.5" y="9.5" width="5" height="5" fill="var(--teal)"></rect>
+      <path
+        d="M9 2v4M12 2v4M15 2v4M9 18v4M12 18v4M15 18v4M2 9h4M2 12h4M2 15h4M18 9h4M18 12h4M18 15h4"
+        stroke="currentColor"
+        stroke-width="1.6"></path>
+    </svg>
+    <span>{t(SITE.name, lang)}</span>
+  </a>
+  <nav aria-label="Main">
+    {
+      NAV.map((n) => (
+        <a href={localePath(n.href, lang)} aria-current={isActive(n.href) ? 'page' : undefined}>
+          {u(n.key)}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="right">
+    <div class="lang" role="group" aria-label={u('toggle.label')}>
+      <a href={enHref} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+      <a href={jaHref} hreflang="ja" lang="ja" aria-current={lang === 'ja' ? 'true' : undefined}>JA</a>
+    </div>
+    <button class="theme-toggle" type="button" aria-label={u('theme.toggle')} title={u('theme.toggle')}>
+      <svg viewBox="0 0 16 16" aria-hidden="true"
+        ><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6"></circle><path
+          d="M8 2a6 6 0 0 1 0 12z"
+          fill="currentColor"></path></svg
+      >
+    </button>
+    <time class="clock mono" aria-hidden="true"></time>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
+    const current =
+      root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+  });
+
+  const clock = document.querySelector<HTMLTimeElement>('.clock');
+  const tick = () => {
+    if (!clock) return;
+    const d = new Date();
+    const day = d.toLocaleDateString('en-US', { weekday: 'short' });
+    const hm = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    clock.textContent = `${day} ${hm}`;
+  };
+  tick();
+  setInterval(tick, 15000);
+</script>
+
+<style>
+  .menubar {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 50;
+    display: flex;
+    align-items: stretch;
+    height: var(--menubar-h);
+    padding: 0 12px;
+    background: var(--window);
+    border-bottom: var(--bw) solid var(--ink);
+    font-size: 0.9rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px 0 4px;
+    color: var(--ink);
+    font-weight: 750;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .brand:hover {
+    background: var(--ink);
+    color: var(--window);
+  }
+
+  .chip {
+    width: 20px;
+    height: 20px;
+  }
+
+  nav {
+    display: flex;
+    align-items: stretch;
+    margin-left: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  nav a:hover,
+  nav a[aria-current='page'] {
+    background: var(--ink);
+    color: var(--window);
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    padding-left: 8px;
+  }
+
+  .lang {
+    display: flex;
+    border: 1.5px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .lang a {
+    padding: 1px 7px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .lang a + a {
+    border-left: 1.5px solid var(--ink);
+  }
+
+  .lang a[aria-current='true'] {
+    background: var(--ink);
+    color: var(--window);
+  }
+
+  .lang a:not([aria-current]):hover {
+    background: var(--hl);
+    color: #000;
+  }
+
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .theme-toggle:hover {
+    background: var(--ink);
+    color: var(--window);
+  }
+
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .clock {
+    font-size: 0.78rem;
+    font-weight: 500;
+    min-width: 6.5em;
+    text-align: right;
+  }
+
+  @media (max-width: 760px) {
+    .menubar {
+      padding: 0 6px;
+      font-size: 0.85rem;
+    }
+    .brand span,
+    .clock {
+      display: none;
+    }
+    nav {
+      margin-left: 0;
+    }
+    nav a {
+      padding: 0 8px;
+    }
+    .right {
+      gap: 6px;
+      padding-left: 4px;
+    }
+    .lang a {
+      padding: 1px 5px;
+    }
+  }
+
+  @media (max-width: 440px) {
+    .brand {
+      display: none;
+    }
+    .menubar {
+      font-size: 0.8rem;
+    }
+    nav a {
+      padding: 0 6px;
+    }
+  }
+</style>

@@ -1,0 +1,30 @@
+# トップページの News / お知らせ。date の新しい順に自動で並びます。表示は上位6件。
+# text は { en: ..., ja: ... } で英語・日本語を書き分けます。
+# link は任意（内部ページなら '/publications/' のように書く。日本語ページでは自動で /ja/ が付きます）
+
+- date: "2026.11"
+  text:
+    en: Launched this website.
+    ja: ウェブサイトを公開しました。
+
+- date: "2026.11"
+  text:
+    en: "“PALETTE”, a reconfigurable LUT-CIM macro, has been accepted to ICCAD 2026."
+    ja: 再構成可能な LUT-CIM マクロ「PALETTE」が ICCAD 2026 に採択されました。
+  link: /publications/
+
+- date: "2026.04"
+  text:
+    en: Received the Excellence Award of the 45th Showa Ikeda Award.
+    ja: 第45回 昭和池田賞 優秀賞を受賞しました。
+
+- date: "2025.06"
+  text:
+    en: Presented our LUT-based multiplication-free accelerator at DAC 2025 in San Francisco.
+    ja: DAC 2025（サンフランシスコ）で、LUT を用いた乗算不要アクセラレータについて発表しました。
+  link: /publications/
+
+- date: "2025.05"
+  text:
+    en: Received the Outstanding Student Poster Award at the IEICE LSI and Systems Workshop 2025.
+    ja: LSIとシステムのワークショップ 2025 で優秀ポスター賞（学生部門）を受賞しました。

@@ -1,0 +1,34 @@
+---
+/**
+ * レトロなウィンドウ枠。
+ * <Window title="News" status="5 items">...</Window>
+ */
+interface Props {
+  title: string;
+  id?: string;
+  status?: string;
+  statusRight?: string;
+  class?: string;
+  as?: 'section' | 'article' | 'div';
+}
+const { title, id, status, statusRight, class: cls, as: Tag = 'section' } = Astro.props;
+---
+
+<Tag class:list={['window', cls]} id={id} aria-label={title}>
+  <div class="titlebar" aria-hidden="true">
+    <span class="box"></span>
+    <span class="title">{title}</span>
+    <span class="box"></span>
+  </div>
+  <div class="window-body">
+    <slot />
+  </div>
+  {
+    (status || statusRight) && (
+      <div class="statusbar">
+        <span>{status}</span>
+        <span>{statusRight}</span>
+      </div>
+    )
+  }
+</Tag>
